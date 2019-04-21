@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.tnikes.fighthub.model.Game;
 import com.tnikes.fighthub.model.GameCharacter;
+import com.tnikes.fighthub.model.Normals;
 import com.tnikes.fighthub.service.ICharacterService;
 import com.tnikes.fighthub.service.IGameService;
+import com.tnikes.fighthub.service.INormalService;
 
 @RestController
 public class MainDataController {
@@ -25,6 +27,9 @@ public class MainDataController {
 	
 	@Autowired
 	private ICharacterService characterService;
+	
+	@Autowired
+	private INormalService normalService;
 	
 	//Default path 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
@@ -84,6 +89,17 @@ public class MainDataController {
 		}
 		
 		return gameCharacters;
+	}
+	
+	//Path for the normal moves. As of right now this is ok since it's just pulling guilty gear data, but the sql statement needs to pull only the first result. Very brittle
+	//No point in making the request parameter optional, pulling in all of the normals unorganized makes 0 fucking sense.
+	//Need to do a join statement to pull in normals categorized into their respective character names in order to make the parameter optional.
+	//Path also needs to be something like '/{game}/{character}/normals
+	@RequestMapping(value = "/normals", method = RequestMethod.GET)
+	public List<Normals> findNormals(@RequestParam String name) {
+		
+		List<Normals> normals = (List<Normals>) normalService.findNormalsByChar(name);
+		return normals;
 	}
 	
 }
