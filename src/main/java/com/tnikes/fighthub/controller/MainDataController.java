@@ -22,6 +22,7 @@ public class MainDataController {
 	//Services
 	@Autowired
 	private IGameService gameService;
+	
 	@Autowired
 	private ICharacterService characterService;
 	
