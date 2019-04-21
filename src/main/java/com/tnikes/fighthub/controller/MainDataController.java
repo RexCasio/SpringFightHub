@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tnikes.fighthub.model.Game;
+import com.tnikes.fighthub.model.GameCharacter;
+import com.tnikes.fighthub.service.ICharacterService;
 import com.tnikes.fighthub.service.IGameService;
 
 @RestController
@@ -17,8 +19,11 @@ public class MainDataController {
 	
 //	final static String DEFAULT_API_PATH = "/fighthubAPI";
 	
+	//Services
 	@Autowired
 	private IGameService gameService;
+	@Autowired
+	private ICharacterService characterService;
 	
 	//Default path 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
@@ -52,6 +57,28 @@ public class MainDataController {
 		}
 		
 		return games;
+	}
+	
+	//Path for the characters. There should probably be a separate path for game specified characters. EX: guiltygear/characters or guiltygear/characters?name=venom
+	//Again, do not need to run CUD of CRUD for this endpoint.
+	@RequestMapping(value = "/characters", method = RequestMethod.GET)
+	public List<GameCharacter> findCharacters(@RequestParam(value = "type", required = false) Integer gameId) {
+		
+		//Checking if the gameid is provided. This should really be a name(String) that gets converted to the required id from a SQL search.
+		//The below logic should pull up a game id given a string for a fighting game name. This should not be within the controller itself though.
+		Boolean gameIdCheck;
+		gameIdCheck = gameId == null ? false : true;
+		
+		List<GameCharacter> gameCharacters = new ArrayList<>();
+		
+		//Checking if gameid is provided and returning characters for specific game. If not, returning all characters lol.
+		if(gameIdCheck) {
+			gameCharacters = (List<GameCharacter>) characterService.findCharactersByGame(gameId);
+		} else {
+			gameCharacters = (List<GameCharacter>) characterService.findAllCharacters();
+		}
+		
+		return gameCharacters;
 	}
 	
 }
