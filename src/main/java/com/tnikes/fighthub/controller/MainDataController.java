@@ -32,7 +32,7 @@ public class MainDataController {
  	public List<Game> findGames(@RequestParam(value = "category", required = false) String category,
  								@RequestParam(value = "gameName", required = false) String gameName) {
 		
-        //Checking if either parameters exist
+		//Checking if either parameters exist
 		Boolean categoryCheck, nameCheck;
 		categoryCheck = category == null ? false : true;
 		nameCheck = gameName == null ? false : true;
