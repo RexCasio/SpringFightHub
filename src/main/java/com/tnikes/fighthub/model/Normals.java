@@ -56,6 +56,9 @@ public class Normals {
 	@Column(name = "cancel")
 	private String cancel;
 	
+	@Column(name = "roman")
+	private String roman;
+	
 	//-------------------GETTERS/SETTERS---------------------------
 	public Integer getId() {
 		return id;
@@ -112,9 +115,6 @@ public class Normals {
 	public void setRecovery(String recovery) {
 		this.recovery = recovery;
 	}
-
-	@Column(name = "roman")
-	private String roman;
 
 	
 }
