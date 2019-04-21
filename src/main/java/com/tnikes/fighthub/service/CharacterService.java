@@ -27,5 +27,12 @@ public class CharacterService implements ICharacterService {
 		List<GameCharacter> gameChars = repository.findCharactersByGame(gameId);
 		return gameChars;
 	}
+
+	@Override
+	public List<GameCharacter> findCharacterByName(String name) {
+		
+		List<GameCharacter> gameChars = repository.findCharacterByName(name);
+		return gameChars;
+	}
 	
 }

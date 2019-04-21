@@ -9,4 +9,6 @@ public interface ICharacterService {
 	public List<GameCharacter> findAllCharacters();
 	
 	public List<GameCharacter> findCharactersByGame(Integer gameId);
+	
+	public List<GameCharacter> findCharacterByName(String name);
 }
